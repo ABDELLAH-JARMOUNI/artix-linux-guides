@@ -1,0 +1,170 @@
+# =============================================================================
+# Secure .gitignore for artix-linux-guides
+# Purpose: keep local secrets, credentials, generated files, caches, and logs out
+# of the repository while allowing guide/source files to be tracked.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Secrets, credentials, tokens
+# ---------------------------------------------------------------------------
+.env
+.env.*
+*.env
+*.secret
+*.secrets
+secrets.*
+secret.*
+credentials.*
+.credentials
+.credentials.*
+*.credentials
+*.token
+*.tokens
+token.*
+tokens.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+*.asc
+*.gpg
+*.age
+*.kdbx
+*.sqlite-secrets
+auth.json
+oauth*.json
+service-account*.json
+client_secret*.json
+id_rsa*
+id_ed25519*
+known_hosts
+authorized_keys
+
+# Keep safe examples/templates trackable
+!.env.example
+!.env.sample
+!*.example
+!*.sample
+!*.template
+!README*
+!LICENSE*
+
+# ---------------------------------------------------------------------------
+# Local OpenCode / AI-agent state
+# Do not commit real auth/session/history/state files.
+# Guides/docs about OpenCode should still be committed as .md/.sh examples.
+# ---------------------------------------------------------------------------
+.local/state/opencode-sandbox/
+.local/share/opencode/
+opencode-sandbox/
+opencode-state/
+.opencode/
+opencode.json.local
+AGENTS.local.md
+
+# ---------------------------------------------------------------------------
+# OpenSnitch local runtime/rules backups
+# Commit documentation, not your live machine rules unless intentionally sanitized.
+# ---------------------------------------------------------------------------
+opensnitchd.pid
+opensnitch-ui.log
+/etc/opensnitchd/rules/
+opensnitch-rules/
+rules.backup/
+*.rules.backup
+
+# ---------------------------------------------------------------------------
+# Shell/runtime logs and temporary output
+# ---------------------------------------------------------------------------
+*.log
+*.out
+*.err
+*.pid
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+*.backup
+*.orig
+*.rej
+tmp/
+temp/
+.cache/
+cache/
+logs/
+
+# ---------------------------------------------------------------------------
+# Editor/IDE local files
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.code-workspace
+Session.vim
+.netrwhist
+tags
+cscope.*
+
+# ---------------------------------------------------------------------------
+# Python caches/environments
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+ENV/
+pip-wheel-metadata/
+dist/
+build/
+*.egg-info/
+
+# ---------------------------------------------------------------------------
+# Node/package-manager caches if any docs/examples are tested locally
+# ---------------------------------------------------------------------------
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+bun.lockb
+
+# ---------------------------------------------------------------------------
+# Archives/binaries/generated downloads
+# Keep the repo lightweight; document download commands instead.
+# ---------------------------------------------------------------------------
+*.tar
+*.tar.gz
+*.tgz
+*.tar.xz
+*.zip
+*.7z
+*.rar
+*.AppImage
+*.deb
+*.rpm
+*.pkg.tar.zst
+*.iso
+*.img
+*.qcow2
+
+# ---------------------------------------------------------------------------
+# OS/desktop junk
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.Trash-*/
+.directory
+
+# ---------------------------------------------------------------------------
+# Local-only notes
+# ---------------------------------------------------------------------------
+TODO.local.md
+notes.local.md
+scratch.md
+private.md
