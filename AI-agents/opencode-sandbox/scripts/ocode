@@ -1,0 +1,56 @@
+#!/bin/sh
+# ocode — run OpenCode sandboxed in the current directory or a given project directory
+# usage:
+#   ocode
+#   ocode /path/to/project
+#   ocode /path/to/project web
+#   ocode . run "explain the build system"
+#   ocode . auth login
+#
+# Part of: opencode-artix-sandbox
+# See docs/hardened-setup.md for the full explanation of every flag below.
+
+set -eu
+
+if [ -d "${1:-}" ]; then
+  PROJECT="$(realpath "$1")"
+  shift
+else
+  PROJECT="$(realpath .)"
+fi
+
+STATE="$HOME/.local/state/opencode-sandbox"
+
+exec bwrap \
+  --ro-bind /usr /usr \
+  --symlink usr/lib /lib \
+  --symlink usr/lib /lib64 \
+  --symlink usr/bin /bin \
+  --symlink usr/bin /sbin \
+  --ro-bind /etc/resolv.conf /etc/resolv.conf \
+  --ro-bind /etc/ssl /etc/ssl \
+  --ro-bind /etc/ca-certificates /etc/ca-certificates \
+  --proc /proc \
+  --dev /dev \
+  --tmpfs /tmp \
+  --dir /home \
+  --tmpfs "$HOME" \
+  --dir "$HOME/.config" \
+  --bind "$HOME/.config/opencode" "$HOME/.config/opencode" \
+  --ro-bind "$HOME/.config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json" \
+  --dir "$HOME/.local" \
+  --dir "$HOME/.local/share" \
+  --dir "$HOME/.cache" \
+  --bind "$PROJECT" "$HOME/project" \
+  --bind "$STATE" "$HOME/.local/share/opencode" \
+  --unshare-all \
+  --share-net \
+  --die-with-parent \
+  --clearenv \
+  --setenv HOME "$HOME" \
+  --setenv USER "${USER:-user}" \
+  --setenv PATH "/usr/local/bin:/usr/bin:/bin" \
+  --setenv TERM "${TERM:-xterm-256color}" \
+  --setenv LANG "${LANG:-C.UTF-8}" \
+  --chdir "$HOME/project" \
+  opencode "$@"

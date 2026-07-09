@@ -1,0 +1,6 @@
+# Local sandbox state / secrets — never commit these
+opencode-sandbox/
+*.bak
+auth.json
+*.key
+.env

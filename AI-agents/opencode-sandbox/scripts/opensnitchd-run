@@ -1,0 +1,9 @@
+#!/bin/sh
+# runit run-script for opensnitchd on Artix Linux.
+# Artix ships an OpenRC unit for opensnitch but no runit one, so this
+# file has to be installed manually. See docs/hardened-setup.md Step 9b
+# for install instructions.
+#
+# Install as: /etc/runit/sv/opensnitchd/run
+exec >>/var/log/opensnitchd.log 2>&1
+exec /usr/bin/opensnitchd -rules-path /etc/opensnitchd/rules/
