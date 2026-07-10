@@ -500,7 +500,8 @@ sudo sv status opensnitchd
 
 Explained:
 
-* `run` is the script runit supervises directly. `exec 2>&1` merges stderr into stdout so daemon errors show up in runit's log rather than vanishing. The final `exec` replaces the shell with the daemon itself so runit tracks the right PID.
+* `run` is the script runit supervises directly. `exec >>/var/log/opensnitchd.log 2>&1` redirects the daemon's stdout/stderr to a dedicated log file instead of runit's default log capture — check this file with `sudo tail -f /var/log/opensnitchd.log` if something looks wrong, and make sure your log rotation covers it since nothing truncates it automatically. The final `exec` replaces the shell with the daemon itself so runit tracks the right PID.
+` merges stderr into stdout so daemon errors show up in runit's log rather than vanishing. The final `exec` replaces the shell with the daemon itself so runit tracks the right PID.
 * `-rules-path /etc/opensnitchd/rules/` is where allow/deny rules get written; `mkdir -p` ensures it exists before the daemon looks for it.
 * The symlink into `/run/runit/service/` activates the service under the current runlevel — same pattern as any other Artix runit service.
 * `sleep 2` gives runit's scanner (`runsvdir`) a moment to notice the new service before you check its status; checking immediately can show a false "supervise/ok: file does not exist" error.

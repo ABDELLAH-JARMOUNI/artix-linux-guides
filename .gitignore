@@ -58,7 +58,7 @@ authorized_keys
 # ---------------------------------------------------------------------------
 .local/state/opencode-sandbox/
 .local/share/opencode/
-opencode-sandbox/
+#opencode-sandbox/
 opencode-state/
 .opencode/
 opencode.json.local
